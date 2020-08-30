@@ -1,4 +1,7 @@
-module Gammoids.Combinatorics.NChooseM exposing (iterator)
+module Gammoids.Combinatorics.NChooseM exposing
+    ( iterator
+    , IterNChooseM
+    )
 
 {-| This module provides an iterator that iterates all subsets of
 a ground set consisting of consecutive Int's 0, .., (n-1)
@@ -157,9 +160,15 @@ next state =
             Maybe.Just ( nextSmallestOrderedSubset state, x )
 
 
+{-| iterator type alias
+-}
+type alias IterNChooseM =
+    Iter (Array Int) OssState
+
+
 {-| Get an iterator of all ordered subsets with fixed size in reverse-lexicographic ordering.
 -}
-iterator : Int -> Int -> Iter (Array Int) OssState
+iterator : Int -> Int -> IterNChooseM
 iterator n m =
     if n >= m then
         Iter.iterator next (createState (Maybe.Just (smallestOrderedSubset m)) n)
