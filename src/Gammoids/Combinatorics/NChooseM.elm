@@ -66,9 +66,9 @@ incrementIndexAfter i subset =
         Maybe.Just x ->
             case Array.get i subset of
                 Maybe.Nothing ->
+                    -- This branch is unreachable as Array.get (i+1) is not Nothing.
                     i
 
-                -- This branch is unreachable as Array.get (i+1) is not Nothing.
                 Maybe.Just y ->
                     if y + 1 < x then
                         i
@@ -96,9 +96,9 @@ nextOrderedSubset subset =
         xi =
             case Array.get i subset of
                 Maybe.Nothing ->
+                    -- only possible if subset is empty
                     0
 
-                -- only possible if subset is empty
                 Maybe.Just x ->
                     x + 1
 
@@ -116,9 +116,9 @@ nextOrderedSubset subset =
             else
                 case Array.get idx subset of
                     Maybe.Nothing ->
+                        -- This branch is unreachable due to construction.
                         0
 
-                    -- This branch is unreachable due to construction.
                     Maybe.Just y ->
                         y
         )
@@ -134,9 +134,9 @@ nextSmallestOrderedSubset state =
     in
     case nextOss of
         Maybe.Nothing ->
+            -- finished iteration
             state
 
-        -- finished iteration
         Maybe.Just subset ->
             if isBiggestOrderedSubset state.n subset then
                 createState Maybe.Nothing state.n
